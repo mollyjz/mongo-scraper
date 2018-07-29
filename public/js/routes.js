@@ -1,5 +1,3 @@
-//why isn't database showing up on robo???????????????????????????????????????????????????
-
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
@@ -38,9 +36,9 @@ app.get("/scrapeold", function(req, res) {
             console.log(error)
         }
         if (saved) {
-            console.log("saved: " + saved) //works but nothing being saved!!!!!!!!!!!!!!!!!!!!!!!!!
+            //console.log("saved: " + saved) //works
         }
-        return res.json();
+        res.json(saved);
     });
     //grab previously scraped (saved: false) items from db
 });
@@ -66,11 +64,12 @@ app.post("/scrapenew", function(req, res) {
                 //console.log(entry); //works
 
                 // save entry to db
-                entry.save(function(err, doc) {
+                entry.save(function(err, doc) { //works
                     if (err) {
                     console.log(err);
                     }
                 });
+                //res.json(entry);
             });
         }); //console.log("scraped") //works
 });
@@ -86,7 +85,7 @@ app.get("/scrapenew", function(req, res) {
         if (saved) {
             console.log("saved: " + saved) //works but nothing being saved!!!!!!!!!!!!!!!!!!!!!!!!!
         }
-        return res.json();
+        res.json(saved);
     });
 });
 
@@ -101,6 +100,7 @@ app.get("/scrapenew", function(req, res) {
         if (saved) {
             console.log(saved); //works
         }
+        res.json(saved);
       });
 });
 
@@ -115,6 +115,7 @@ app.delete("/clear", function(req, res) {
         if (data) {
             console.log(data);
         }
+        res.json(data);
       }); 
 });
 
@@ -136,6 +137,7 @@ app.get("/saved", function(req, res) {
         if (saved) {
             console.log(saved) //works but not saving new data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
+        res.json(saved);
     });
 });
 
@@ -151,7 +153,8 @@ app.put("/delete/:id", function(req, res) {
         if (saved) {
             console.log(saved);
         }
-      });
+        res.json(saved);
+      }); 
 });
 
 //when click view comments button...
@@ -166,7 +169,7 @@ app.get("/comments/:id", function(req, res) {
         if (saved) {
             console.log(saved); //works but only saving blank comments!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
-        //return data.comments;
+        res.json(saved);
   });
 });
 
@@ -183,6 +186,7 @@ app.post("/comments/:commentid", function(req, res) {
         if (saved) {
             console.log(saved); //works but only saving blank comments!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
+        res.json(saved);
     });
 });
 
@@ -196,6 +200,7 @@ app.delete("/comments/:commentid", function(req, res) {
         if (data) {
             console.log(data);
         }
+        res.json(data);
     });
 });
 

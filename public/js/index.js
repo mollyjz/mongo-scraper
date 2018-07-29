@@ -1,38 +1,35 @@
-//TYPE OUT THE SKELETON FIRST AND INPUT VERY BASIC DUMMY DATA/COMPONENTS TO START OUT, THEN MAKE SURE EACH WORKS
-//DRAW OUT PAGE, EXPLAIN FUNCTIONALITY OF EACH COMPONENT
-//MAP OUT ROUTES AND DB INTERACTIONS
-
-
 //on load, for each article, generate a paragraph with title and summary printed, plus link to article
-function loadArticles() {
-    $("#article-container").empty();
-        $("#article-container").prepend(
-            // "<p><span id='articleTitle' data-id=" + data[i]._id + ">" + data[i].title + "<span><button>Save</button></span></span></p>"
-            "<p>Hello there.<span><button id='save'>test button!</button></span></p>"
-        )
-}
-
-$(document).on("click", "#testing", function() {
-    loadArticles();
-});
-
-
+// function loadArticles() {
+//     $("#article-container").empty();
+//         $("#article-container").prepend(
+//             "<p><span id='articleTitle' data-id=" + data[i]._id + ">" + data[i].title + "<span><button>Save</button></span></span></p>"
+//             // "<p>Hello there.<span><button id='save'>test button!</button></span></p>"
+//         )
+// }
 
 ////////////////////////////////////////////////////////////////////////////////////
 
 //when page loads...
-loadArticles();
+//loadArticles();
 
+//THIS SHOULD REALLY BE ON LOAD BUT USING BUTTON FOR TESTING PURPOSES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //call GET request to load previously scraped articles from database
-$(document).on("click", "#testing2", function(event) {
+$(document).on("click", "#testing", function(event) {
     event.preventDefault();
     $.ajax({
         method: "GET",
         url: "/scrapeold",
-        data: "testing!"
+        data: "testing!" ////////////////////////////////////////////////need to pass something in????????
     }).then(function(data) {
-        console.log("hey!"); //not working
-        //print previously scraped articles from database
+        for (var i=0; i<data.length; i++) {
+            console.log("hey!"); //not working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            console.log(data);
+            $("#article-container").empty();
+            $("#article-container").prepend(
+            "<p><span id='articleTitle' data-id=" + data[i]._id + ">" + data[i].title + "<span><button>Save</button></span></span></p>"
+            // "<p>Hello there.<span><button id='save'>test button!</button></span></p>"
+        );
+        };
     });
 });
 
@@ -41,14 +38,22 @@ $(document).on("click", "#scrape", function(event) {
     $.ajax({
         method: "POST",
         url: "/scrapenew"
-    }).then(function(data) {
-        //////////////////
+    // }).then(function(data) {
+    //     //////////////////
     });
     $.ajax({
         method: "GET",
         url: "/scrapenew"
     }).then(function(data) {
-        //////////////////
+        for (var i=0; i<data.length; i++) {
+        console.log("data: " + data);
+        $("#article-container").empty();
+        $("#article-container").prepend(
+            "<p><span id='articleTitle' data-id=" + data[i]._id + ">" + data[i].title + "<span><button>Save</button></span></span></p>"
+            // "<p>Hello there.<span><button id='save'>test button!</button></span></p>"
+        );
+        //loadArticles(); /////////////////////////////////////////////
+    }
     });
 });
 

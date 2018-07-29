@@ -5,15 +5,16 @@ function loadArticles() {
         // "<p><span id='articleTitle' data-id=" + data[i]._id + ">" + data[i].title + "<span><button>Save</button></span></span></p>"
         "<p>Hello there!<span><button id='delete'>delete</button><span><button id='comments'>View Comments</button></span></span></p>"
     )
-    $.ajax({
-        method: "PUT",
-        url: "/delete?id=" + articleId
-    }).then(function(data) {
-        ////////////////////
-    });
+    // $.ajax({
+    //     method: "PUT",
+    //     url: "/delete?id=" + articleId
+    // }).then(function(data) {
+    //     ////////////////////
+    // });
 }
 
 //on load, render saved articles
+//USING BUTTON FOR TESTING PURPOSES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 $(document).on("click", "#testing", function(event) {
     event.preventDefault();
     loadArticles();
