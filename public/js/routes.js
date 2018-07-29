@@ -1,3 +1,5 @@
+//need to assign data-id to each article and comment-id to each comment (use "this")
+
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
@@ -69,7 +71,6 @@ app.post("/scrapenew", function(req, res) {
                     console.log(err);
                     }
                 });
-                //res.json(entry);
             });
         }); //console.log("scraped") //works
 });
@@ -83,14 +84,15 @@ app.get("/scrapenew", function(req, res) {
             console.log(error)
         }
         if (saved) {
-            console.log("saved: " + saved) //works but nothing being saved!!!!!!!!!!!!!!!!!!!!!!!!!
+            //console.log("saved: " + saved) //works
         }
         res.json(saved);
     });
 });
 
 //when click "save" button ("/saved")...
- app.put("/save/:id", function(req, res) {
+app.put("/save/:id", function(req, res) {
+    //console.log("does this work?") //no!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //change "saved" to true in db
     //console.log("update to save worked!"); //works
     db.articles.update({_id: mongojs.ObjectID(req.params.id)}, {$set: {"saved": true}}, function(err, saved, data) {
@@ -98,7 +100,7 @@ app.get("/scrapenew", function(req, res) {
             console.log(err);
         }
         if (saved) {
-            console.log(saved); //works
+            //console.log("saved " + saved); //works
         }
         res.json(saved);
       });
@@ -137,7 +139,7 @@ app.get("/saved", function(req, res) {
         if (saved) {
             console.log(saved) //works but not saving new data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
-        res.json(saved);
+        //res.json(saved);
     });
 });
 

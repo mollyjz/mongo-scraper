@@ -9,8 +9,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-//when page loads...
-//loadArticles();
 
 //THIS SHOULD REALLY BE ON LOAD BUT USING BUTTON FOR TESTING PURPOSES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //call GET request to load previously scraped articles from database
@@ -18,18 +16,18 @@ $(document).on("click", "#testing", function(event) {
     event.preventDefault();
     $.ajax({
         method: "GET",
-        url: "/scrapeold",
-        data: "testing!" ////////////////////////////////////////////////need to pass something in????????
+        url: "/scrapeold"
     }).then(function(data) {
+        $("#article-container").empty();
         for (var i=0; i<data.length; i++) {
-            console.log("hey!"); //not working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            console.log(data);
-            $("#article-container").empty();
+            // console.log("data: " + data[i])
+            // $("#test").prepend(data[i]);
+            //console.log(data); //works
             $("#article-container").prepend(
-            "<p><span id='articleTitle' data-id=" + data[i]._id + ">" + data[i].title + "<span><button>Save</button></span></span></p>"
+            "<p><span id='articleSpan' data-id=" + data[i]._id + ">" + data[i].title + "<span><button id='save'>Save</button></span></span></p>"
             // "<p>Hello there.<span><button id='save'>test button!</button></span></p>"
-        );
-        };
+        )
+        }; //so just need to grab the data-id attribute of each article's span
     });
 });
 
@@ -45,25 +43,26 @@ $(document).on("click", "#scrape", function(event) {
         method: "GET",
         url: "/scrapenew"
     }).then(function(data) {
-        for (var i=0; i<data.length; i++) {
-        console.log("data: " + data);
         $("#article-container").empty();
+        for (var i=0; i<data.length; i++) {
+        //console.log("data: " + data); //works
         $("#article-container").prepend(
-            "<p><span id='articleTitle' data-id=" + data[i]._id + ">" + data[i].title + "<span><button>Save</button></span></span></p>"
-            // "<p>Hello there.<span><button id='save'>test button!</button></span></p>"
+            "<p><span id='articleSpan' data-id=" + data[i]._id + ">" + data[i].title + "<span><button id='save'>Save</button></span></span></p>"
         );
-        //loadArticles(); /////////////////////////////////////////////
     }
     });
 });
 
 $(document).on("click", "#save", function(event) {
     event.preventDefault();
+    // var articleId = $(this).parents("#articleSpan").attr("data-id");
+    var thisArticleId = $(this).parents("#articleSpan").data().id;
+    // console.log(thisArticleId);
     $.ajax({
         method: "PUT",
-        url: "/save?id=" + articleId ////////////////////////
+        url: "/save/" + thisArticleId
     }).then(function(data) {
-        /////////////////////
+        //console.log("saved") //works
     });
 });
 
@@ -73,7 +72,7 @@ $(document).on("click", "#clear", function(event) {
         method: "DELETE",
         url: "/clear"
     }).then(function(data) {
-        /////////////////////
+        $("#article-container").empty();
     });
 });
 

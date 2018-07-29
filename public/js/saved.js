@@ -21,9 +21,10 @@ $(document).on("click", "#testing", function(event) {
 });
 
 $(document).on("click", "#delete", function(event) {
-    $.ajax({
+    event.preventDefault();
+    var thisArticleId = $(this).parents("#articleSpan").data().id;    $.ajax({
         method: "PUT",
-        url: "/delete?id=" + articleId
+        url: "/delete/" + thisArticleId
     }).then(function(data) {
         /////////////////////
     });
@@ -32,9 +33,10 @@ $(document).on("click", "#delete", function(event) {
 //view comments
 $(document).on("click", "#comments", function(event) {
     event.preventDefault();
+    var thisArticleId = $(this).parents("#articleSpan").data().id;
     $.ajax({
         method: "GET",
-        url: "/comments?id=" + articleId
+        url: "/comments/" + thisArticleId
     });
 });
 
@@ -44,7 +46,7 @@ $(document).on("click", "#save-comment", function(event) {
     $("#comment-modal").modal();
     $.ajax({
         method: "POST",
-        url: "/comments?commentid=" + commentId
+        url: "/comments/" + commentId
     }).then(function(data) {
         ////////////////////////
     });
@@ -55,7 +57,7 @@ $(document).on("click", "#delete-comment", function(event) {
     event.preventDefault();
     $.ajax({
         method: "DELETE",
-        url: "/comments?commentid=" + commentId
+        url: "/comments/" + commentId
     }).then(function(data) {
         //////////////////////////
     });
