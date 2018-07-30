@@ -1,24 +1,8 @@
 //on load, for each article, generate a paragraph with title and summary printed, plus link to article
-// function loadArticles() {
-//     $("#article-container").empty();
-//     $("#article-container").prepend(
-//         // "<p><span id='articleTitle' data-id=" + data[i]._id + ">" + data[i].title + "<span><button>Save</button></span></span></p>"
-//         "<p>Hello there!<span><button id='delete'>delete</button><span><button id='comments'>View Comments</button></span></span></p>"
-//     )
-//     // $.ajax({
-//     //     method: "PUT",
-//     //     url: "/delete?id=" + articleId
-//     // }).then(function(data) {
-//     //     ////////////////////
-//     // });
-// }
 
-// $("#article-container").empty();
-// $("#article-container").prepend(
-//     "<p><span id='articleSpan' data-id=" + data[i]._id + ">" + data[i].title + "<span><button id='delete'>Delete</button></span><span><button id='comments'>View Comments</button></span></span></p>"
+//$("#comment-modal").modal("hide");
 
 var commentsArray = [];
-
 
 //on load, render saved articles
 //USING BUTTON FOR TESTING PURPOSES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -48,61 +32,77 @@ $(document).on("click", "#delete", function(event) {
     $.ajax({
         method: "PUT",
         url: "/delete/" + thisArticleId
-    }).then(function(data) {
-        /////////////////////
+    // }).then(function(data) {
+    //     /////////////////////
     });
 });
 
 //view comments
 $(document).on("click", "#comments", function(event) {
-    var modalText = $("<div class='container-fluid text-center' id='comment-modal'>").append(
-        $("<h4>").text("Comments"),
-        $("<hr>"),
-        $("<ul class='list-group note-container'>"),
-        $("<textarea placeholder='Enter Comment Here' rows='4' cols='60'>"),
-        $("<button class='btn btn-success save'>Save Note</button>")
-    );
-    // event.preventDefault();
+    event.preventDefault();
+    // var modalText = $("<div class='container-fluid text-center' id='comment-modal'>").append(
+    //     $("<h4>").text("Comments"),
+    //     $("<hr>"),
+    //     $("<ul class='list-group note-container'>"),
+    //     $("<textarea placeholder='Enter Comment Here' rows='4' cols='60'>"),
+    //     $("<button class='btn btn-success save'>Save Note</button>")
+    // );
     var thisArticle = $(this).parents("#articleSpan");
-    //thisArticle.saved = false;
     var thisArticleId = $(this).parents("#articleSpan").data().id;
-    //$("#modal-container").html(modalText);   
-    $("#comment-modal").modal(modalText);
     $.ajax({
         method: "GET",
         url: "/comments/" + thisArticleId
     }).then(function(data) {
-        console.log("data: " + data)             
-    });
-}); //comments saved in same db??
-
-//post new comment
-$(document).on("click", "#save-comment", function(event) {
-    event.preventDefault();
-    var thisArticle = $(this).parents("#articleSpan");
-    //thisArticle.saved = false;
-    var thisArticleId = $(this).parents("#articleSpan").data().id;
-    // $("#comment-modal").modal();
-    $.ajax({
-        method: "POST",
-        url: "/comments/" + thisArticleId,
-        data: {
-            comment: $("#comment-form").val().trim()
-        }
-    }).then(function(data) {
-        console.log("posted comment!")
-        $("#comment-container").prepend(data);
-        $(thisArticle.comments).append(data);
+        //need to append data to modal
+        //$("#comment-modal").modal("show");
+        console.log("data: " + data); ////////////////////////////////////////////
+        // var noteData = {
+        //     _id: thisArticleId, //need this.thisArticleId?
+        //     notes: data || []
+        // };
+        console.log(this.thisArticleId) /////NOTHING!!
+        $("#save-comment").attr("data-article", this.thisArticleId); //when click save comment button, assign the button a data-article attribute to store the article's ID and the note being added
+        $("#delete-comment").attr("data-article", this.thisArticleId); //when click save delete button, assign the button a data-article attribute to store the article's ID and the note being added
     });
 });
 
+// NO WAY TO REFERENCE THE ARTICLE FROM HERE SINCE THE MODAL IS STUCK ON THE PAGE RATHER THAN LOADING FOR EACH ARTICLE ON CLICK!!!!!!!
+//post new comment
+$(document).on("click", "#save-comment", function(event) {
+    event.preventDefault();
+    $("#comment-modal").modal();
+    var noteData;
+    console.log($(this).attr("data-article")); ////////////////////////////////////////////// WHY UNDEFINED??
+    var newNote = $("#comment-form").val().trim();
+    if (noteData) {
+        noteData = {
+            _matchingArticle: $(this).attr("data-article")._id, ////////////////////////////////////
+            noteText: newNote
+        }
+
+        $.ajax({
+            method: "POST",
+            url: "/comments/" + thisArticleId,
+            data: noteData
+        }).then(function(data) {
+            console.log("posted comment!")
+            $("#comment-container").prepend(data);
+            thisArticle.comments.append(data);
+        });
+
+    }
+
+});
+
+
 //delete comment
 $(document).on("click", "#delete-comment", function(event) {
+    var thisComment; /////////////////////////////////////////////////////////
     event.preventDefault();
     $.ajax({
         method: "DELETE",
         url: "/comments/" + commentId
     }).then(function(data) {
-        //////////////////////////
+        thisComment.hide();
     });
 });

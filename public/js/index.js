@@ -33,6 +33,7 @@ $(document).on("click", "#testing", function(event) {
 
 $(document).on("click", "#scrape", function(event) {
     event.preventDefault();
+    $("#article-container").empty();
     $.ajax({
         method: "POST",
         url: "/scrapenew"

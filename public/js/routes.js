@@ -1,5 +1,5 @@
-//modal
-//comment issues
+//modal (oh well)
+//comment issues -- how to reference the current article from modal?
 
 var express = require("express");
 var app = express();
@@ -197,7 +197,7 @@ app.get("/comments/:id", function(req, res) {
 app.post("/comments/:id", function(req, res) {
     //push comment to the comments column of that article's db entry
     // console.log("posted comment!") //works
-    db.articles.update({_id: mongojs.ObjectID(req.params.id)}, {$push: {"comments": req.body}}, function(data, err, saved) {
+    db.articles.update({_id: mongojs.ObjectID(req.params.id)}, {$set: {"comments": req.body}}, function(data, err, saved) { //$push?
         //console.log("posted comment!"); //works
         //console.log(req.body);
         if (err) {
