@@ -1,4 +1,5 @@
-//need to assign data-id to each article and comment-id to each comment (use "this")
+//modal
+//comment issues
 
 var express = require("express");
 var app = express();
@@ -37,9 +38,9 @@ app.get("/scrapeold", function(req, res) {
         if (error) {
             console.log(error)
         }
-        if (saved) {
-            //console.log("saved: " + saved) //works
-        }
+        // if (saved) {
+        //     //console.log("saved: " + saved) //works
+        // }
         res.json(saved);
     });
     //grab previously scraped (saved: false) items from db
@@ -59,7 +60,8 @@ app.post("/scrapenew", function(req, res) {
                 articleResults.title = $(element).attr("data-track-headline");
                 articleResults.link = $(element).attr("href");
                 articleResults.summary = $(element).find("p").text(); 
-                articleResults.saved = false; 
+                articleResults.saved = false;
+                articleResults.comments = []; //////////////////////////////////////////////////
                 //console.log("Title: " + articleResults.title + "-----" + "Link: " + articleResults.link + "-----" + "Summary: " + articleResults.summary); //works
                 var entry = new Article(articleResults);
 
@@ -83,9 +85,9 @@ app.get("/scrapenew", function(req, res) {
         if (error) {
             console.log(error)
         }
-        if (saved) {
-            //console.log("saved: " + saved) //works
-        }
+        // if (saved) {
+        //     //console.log("saved: " + saved) //works
+        // }
         res.json(saved);
     });
 });
@@ -99,9 +101,9 @@ app.put("/save/:id", function(req, res) {
         if (err) {
             console.log(err);
         }
-        if (saved) {
-            //console.log("saved " + saved); //works
-        }
+        // if (saved) {
+        //     //console.log("saved " + saved); //works
+        // }
         res.json(saved);
       });
 });
@@ -114,9 +116,9 @@ app.delete("/clear", function(req, res) {
         if (err) {
             console.log(err);
         }
-        if (data) {
-            console.log(data);
-        }
+        // if (data) {
+        //     console.log(data);
+        // }
         res.json(data);
       }); 
 });
@@ -132,15 +134,29 @@ app.get("/saved", function(req, res) {
     //load basic HTML
     res.sendFile(path.join(__dirname, "../../public", "saved.html"));
     //grab previously saved items from db (saved: true)
-    db.articles.find({"saved": true}, function(err, saved, data) {
-        if (err) {
-            console.log(err)
-        };
-        if (saved) {
-            console.log(saved) //works but not saving new data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // db.articles.find({"saved": true}, function(err, saved, data) {
+    //     if (err) {
+    //         console.log(err)
+    //     };
+    //     // if (saved) {
+    //     //     console.log(saved) //works
+    //     // }
+    //     //res.json(saved);
+    // });
+});
+
+app.get("/scrapesaved", function(req, res) {
+    //console.log("scrape old worked!"); //works
+    db.articles.find({"saved": true}, function(error, saved) {
+        if (error) {
+            console.log(error)
         }
-        //res.json(saved);
+        // if (saved) {
+        //     //console.log("saved: " + saved) //works
+        // }
+        res.json(saved);
     });
+    //grab previously scraped (saved: true) articles from db
 });
 
 //when click delete from saved button...
@@ -152,9 +168,9 @@ app.put("/delete/:id", function(req, res) {
         if (err) {
             console.log(err);
         }
-        if (saved) {
-            console.log(saved);
-        }
+        // if (saved) {
+        //     console.log(saved);
+        // }
         res.json(saved);
       }); 
 });
@@ -168,40 +184,42 @@ app.get("/comments/:id", function(req, res) {
         if (err) {
             console.log(err);
         }
-        if (saved) {
-            console.log(saved); //works but only saving blank comments!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        }
-        res.json(saved);
+        // if (saved) {
+        //     console.log(saved); //works
+        // }
+        console.log("data: " + data); //nothing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+        console.log("saved: " + saved);
+        //res.json(data.comments);
   });
 });
 
 //in modal, when click save note button...
-app.post("/comments/:commentid", function(req, res) {
+app.post("/comments/:id", function(req, res) {
     //push comment to the comments column of that article's db entry
     // console.log("posted comment!") //works
     db.articles.update({_id: mongojs.ObjectID(req.params.id)}, {$push: {"comments": req.body}}, function(data, err, saved) {
         //console.log("posted comment!"); //works
-        console.log(req.body);
+        //console.log(req.body);
         if (err) {
             console.log(err);
         }
-        if (saved) {
-            console.log(saved); //works but only saving blank comments!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        }
+        // if (saved) {
+        //     console.log(saved); //works but only saving blank comments!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // }
         res.json(saved);
     });
 });
 
-app.delete("/comments/:commentid", function(req, res) {
+app.delete("/comments/:id/:commentid", function(req, res) {
     //not sure how to delete comment yet
     db.articles.remove({_id: mongojs.ObjectID(req.params.commentid)}, function(data, err, saved) {
         //console.log("comment removed!"); //works
         if (err) {
             console.log(err);
         }
-        if (data) {
-            console.log(data);
-        }
+        // if (data) {
+        //     console.log(data);
+        // }
         res.json(data);
     });
 });

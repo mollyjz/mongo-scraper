@@ -56,12 +56,16 @@ $(document).on("click", "#scrape", function(event) {
 $(document).on("click", "#save", function(event) {
     event.preventDefault();
     // var articleId = $(this).parents("#articleSpan").attr("data-id");
+    var thisArticle = $(this).parents("#articleSpan");
+    //console.log(thisArticle);
+    thisArticle.saved = true;
     var thisArticleId = $(this).parents("#articleSpan").data().id;
     // console.log(thisArticleId);
     $.ajax({
         method: "PUT",
         url: "/save/" + thisArticleId
     }).then(function(data) {
+        thisArticle.hide();
         //console.log("saved") //works
     });
 });
