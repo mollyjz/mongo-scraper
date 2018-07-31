@@ -17,22 +17,46 @@
 
 <body>
 
-<div id="article-container"></div>
-<br>
-<br>
-<button id="testing">Testing</button>
-<br>
-<div id="test-container"></div>
-<button id="testing2">Testing 2</button>
-<br>
-<div></div>
-<button id="scrape">Scrape</button>
-<br>
-<div></div>
-<button id="clear">Clear</button>
-<br>
-<br>
-<div id="test"></div>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">News Scraper!</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="/">Home<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/saved">Saved Articles</a>
+        </li>
+    </ul>
+        <span class="nav-item">
+                <button type="button" id="scrape" class="btn btn-success pull-right">Scrape New Articles</button>
+        </span>
+        <span class="nav-item">
+            <button type="button" id="clear" class="btn btn-primary pull-right">Clear Articles</button>
+        </span>
+    </div>
+</nav>
+
+<!-- <button type="button" class="btn btn-warning">Warning</button> -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 container-fluid" style="width:1250px">
+            <div id="article-container" class="container-fluid"></div>
+        </div>
+    </div>
+</div>
+
+<!-- <button id="testing">Testing</button> -->
+<!-- <div id="test-container"></div> -->
+<!-- <button id="testing2">Testing 2</button> -->
+
+</div>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 

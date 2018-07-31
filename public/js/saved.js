@@ -6,8 +6,8 @@ var commentsArray = [];
 
 //on load, render saved articles
 //USING BUTTON FOR TESTING PURPOSES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-$(document).on("click", "#testing", function(event) {
-    event.preventDefault();
+//$(document).on("click", "#testing", function(event) {
+window.onload = function() {
     $("#comment-modal").modal("hide");
     $.ajax({
         method: "GET",
@@ -15,12 +15,12 @@ $(document).on("click", "#testing", function(event) {
     }).then(function(data) {
         $("#article-container").empty();
         for (var i=0; i<data.length; i++) {
-            $("#article-container").prepend(
-            "<p><span id='articleSpan' data-id=" + data[i]._id + ">" + data[i].title + "<span><button id='delete'>Delete</button></span><span><button id='comments'>View Comments</button></span></span></p>"
-            )
+            $("#article-container").append(
+                "<p><span id='articleSpan' data-id=" + data[i]._id + ">" + data[i].title + "&nbsp;<span><button id='delete' type='button' class='btn btn-warning'>View Comments&nbsp;</button><button id='comments' type='button' class='btn btn-danger'>Delete</button></span></span></p>"
+            );
         }
     });
-});
+}
 
 //remove from saved
 $(document).on("click", "#delete", function(event) {
@@ -86,7 +86,7 @@ $(document).on("click", "#save-comment", function(event) {
             data: noteData
         }).then(function(data) {
             console.log("posted comment!")
-            $("#comment-container").prepend(data);
+            $("#comment-container").append(data);
             thisArticle.comments.append(data);
         });
 

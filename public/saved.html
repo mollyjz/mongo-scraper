@@ -1,26 +1,26 @@
 <!-- //SAVED
 //nav bar...
-    //clear button
-    //scrape button
-    //saved article link
-    //home link
+//clear button
+//scrape button
+//saved article link
+//home link
 //container to display scraped articles
-    //for each article...
-        //delete from saved button
-        //view comments button
+//for each article...
+//delete from saved button
+//view comments button
 //modal with comments for each article
-    //form to enter new comments
-    //container for comments previously entered -->
+//form to enter new comments
+//container for comments previously entered -->
 
-    <!-- //INDEX
+<!-- //INDEX
 //nav bar...
-    //clear button
-    //scrape button
-    //saved article link
-    //home link
+//clear button
+//scrape button
+//saved article link
+//home link
 //container to display scraped articles
-    //for each article...
-        //save button -->
+//for each article...
+//save button -->
 <html>
 
 <head>
@@ -30,6 +30,31 @@
 </head>
 
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">News Scraper!</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/saved">Saved Articles</a>
+            </li>
+        </ul>
+            <span class="nav-item">
+                    <button type="button" id="scrape" class="btn btn-success pull-right">Scrape New Articles</button>
+            </span>
+            <span class="nav-item">
+                <button type="button" id="clear" class="btn btn-primary pull-right">Clear Articles</button>
+            </span>
+            
+        </div>
+    </nav>
 
 <!-- modal -->
 <div class="comment-modal" tabindex="-1" id="comment-modal" role="dialog">
@@ -62,14 +87,10 @@
 <div id="article-container"></div>
 <br>
 <br>
-<button id="testing">ON LOAD...</button>
 <!-- <div id="test-container"></div>
 <button id="testing2">Testing 2</button> -->
-<br>
-<br>
-
 <!-- <div id="modal-container"></div>
- -->
+    -->
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#comment-modal">
     Load Modal
 </button> -->

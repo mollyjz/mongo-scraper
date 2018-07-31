@@ -1,5 +1,6 @@
 //modal (oh well)
 //comment issues -- how to reference the current article from modal?
+//add links to articles
 
 var express = require("express");
 var app = express();
@@ -147,7 +148,7 @@ app.get("/saved", function(req, res) {
 
 app.get("/scrapesaved", function(req, res) {
     //console.log("scrape old worked!"); //works
-    db.articles.find({"saved": true}, function(error, saved) {
+    db.articles.find({"saved": true}, function(error, saved, data) {
         if (error) {
             console.log(error)
         }
