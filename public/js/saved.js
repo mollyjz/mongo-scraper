@@ -16,7 +16,7 @@ window.onload = function() {
         $("#article-container").empty();
         for (var i=0; i<data.length; i++) {
             $("#article-container").append(
-                "<p><span id='articleSpan' data-id=" + data[i]._id + ">" + data[i].title + "&nbsp;<span><button id='delete' type='button' class='btn btn-warning'>View Comments&nbsp;</button><button id='comments' type='button' class='btn btn-danger'>Delete</button></span></span></p>"
+                "<p><span id='articleSpan' data-id=" + data[i]._id + ">" + data[i].title + "&nbsp;<span><button id='comments' type='button' class='btn btn-warning'>View Comments&nbsp;</button><button id='delete' type='button' class='btn btn-danger'>Delete</button></span></span></p>"
             );
         }
     });
