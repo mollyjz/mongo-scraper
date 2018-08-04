@@ -25,10 +25,20 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/news_db"; ////
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
 
 //need separate DB for each user's comments???????????????? Or just loop through all comments and return those with their name? Have comments column in DB
+
+try {
+    mongoose.Promise = Promise;
+    mongoose.connect(MONGODB_URI);
+}
+catch(error) {
+    console.error(error);
+    // expected output: SyntaxError: unterminated string literal
+    // Note - error messages will vary depending on browser
+}
+  
+
 
 // Database configuration
 var databaseUrl = "news_db";
